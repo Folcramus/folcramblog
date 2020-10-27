@@ -17,7 +17,10 @@ import os
 from pathlib import Path
 from django.urls import reverse_lazy
 from django.http import HttpResponse , HttpResponseRedirect
+import dj_database_url
 
+db_from_env = dj_database_url.config()
+DATABASE['default'].update(db_from_env)
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
