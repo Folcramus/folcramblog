@@ -1,0 +1,41 @@
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="{{ prev_url }}">Previous</a>
+        {% endif %}
+    {% for i in posts.paginator %}
+
+
+
+
+
+
+
+
+  {% if i.number > posts.number|add:-2 and i.number < posts.number|add:2 %}
+        <span class="current">
+            <a href="?page={{i.number}}">{{ i.number }}</a>
+   {% elif i.number > 3|add:-3  %}
+
+    <!-- Если до текущей страницы есть больше 4 страниц, показываем многоточие -->
+    <span class="ellipsis">..</span>
+
+       {% endif %}
+
+
+        </span>
+
+         {% endfor %}
+
+
+
+
+
+
+
+
+        {% if posts.has_next %}
+            <a href="{{ next_url }}">Next</a>
+        {% endif %}
+    </span>
+</div>

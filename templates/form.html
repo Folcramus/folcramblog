@@ -1,0 +1,16 @@
+
+
+<form action="{% url 'con' %}" method="post" class="form-inline">
+
+    <p>Подпишись на рассылку</p>
+    {% csrf_token %}
+ {{ contact_form}}
+    {{ fields.error }}
+    {{ form.as_p }}
+
+    <button type="submit" >Отправить</button>
+
+
+</form>
+
+

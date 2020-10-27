@@ -1,0 +1,34 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<h1>{% trans "Sign In" %}</h1>
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+<p>{% blocktrans with site.name as site_name %}
+    Для того чтобы осавлять комментарии войдите через аккаунты в соц. сетях:{% endblocktrans %}</p>
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+    <a href="{%provider_login_url 'vk' %}">  <img src="{% static  'vk.png' %}" width="64" height="64"></a>
+       <a href="{%provider_login_url 'google' %}">  <img src="{% static  'vk.png' %}" width="64" height="64"></a>
+ <a href="{%provider_login_url 'telegram' %}">  <img src="{% static  'vk.png' %}" width="64" height="64"></a>
+  </ul>
+
+
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% endif %}
+
+{% endblock %}

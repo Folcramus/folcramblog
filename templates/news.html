@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load static %}
+{% load i18n %}
+{% load account socialaccount %}
+{%  load embed_video_tags %}
+{% load contact_tags %}
+{% block content %}
+
+    <div class="container mt-3 ">
+    <div class="row">
+    <div class="col-lg-8">
+    <div class="card w-76 mb-3">
+    <div class="card-body">
+    <div class="card-title">
+       <h2  class="text-dark text-lg-left">{{ post.name }}</h2>
+    </div>
+
+
+
+
+
+        <p> Дата создания:{{ post.updated }}</p>
+        {% autoescape off %}
+        <p class="text-dark text-xl-left">{{ post.text }}</p>
+        {% endautoescape %}
+
+
+
+
+<p> <a href="/?page=1">Вернутся на главную</a></p>
+    <div class="card-title">
+<div class="ya-share2" data-curtain data-shape="round"  data-title="{{ post.name }}" data-services="collections,vkontakte,facebook,odnoklassniki,messenger,telegram" data-description:vkontakte='{{ post.text }}'></div>
+    </div>
+    </div>
+    </div>
+
+ {% if user.is_active %}
+     <p id="anchor"></p>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <button type="submit" class="btn btn-success" name="coment">Отправить</button>
+
+        </form>
+    {% else %}
+        <h4>Что бы оставить комментарий авторизуйтесь</h4>
+    {% endif %}
+
+<ul class="list-group list-group-flush">
+
+        {% for comment in comment %}
+
+         <a name="#top"></a>
+ <li class="list-group-item">
+
+            <div class="row">
+            <div class="col 9">
+     {% if comment.user.socialaccount_set.all.0.get_avatar_url %}
+
+         <p class="text-dark text-xl-left" >  <img src="{{ comment.user.socialaccount_set.all.0.get_avatar_url }} " width="32" height="32" />
+         {% else %}
+          <img src="{% static 'defolt.png' %} " width="32" height="32" />
+         {% endif %}
+     {% if comment.user.first_name and comment.user.last_name %}
+         <strong>  {{ comment.user.first_name }}{{ comment.user.last_name }} </strong>
+     {% else %}
+         <a class="text-lowercase"><strong>{{ comment.user }} </strong></a>
+     {% endif %}
+                <small> {{ comment.created }} </small></p>
+            </div>
+            <div class="col-2">
+                 {% if user == comment.user %}
+         <form action="" method="post">
+         {% csrf_token %}
+         <input type="hidden" name="comment_id" value="{{ comment.id }}"/>
+
+  <button type="submit" class="btn btn-danger btn-sm" name="del">&#10006;</button>
+         </form>
+
+{% endif %}
+            </div>
+             </div>
+
+
+     <p> {{ comment.text }}</p>
+
+ </li>
+
+     {% endfor %}
+
+
+    </li>
+</ul>
+    </div>
+
+<div class="col-lg-4">
+
+ <div class="card-inline ">
+<div class=" card bg-light mb-3 " style="height: 10rem;">
+<p class="text-center"> Подпишись на рассылку чтобы первым получать новости</p>
+<br>
+    <form method="post" class="form-inline-auto">
+    {% csrf_token %}
+   <div class="row">
+<div class=" col-8 offset-1 ">
+{{ form2.email}}
+
+</div>
+<div class="px-md-1">
+    <button type="submit" name="emal" class="btn btn-success">&#10148;</button>
+</div>
+    </div>
+
+
+    </form>
+
+</div>
+
+<div class="card-header">
+    На странице
+</div>
+        {% for i in news %}
+
+<ul class="list-group list-group-flush">
+{% if i.id == post.id %}
+    <li class="list-group-item bg-success list-group-item-action active">  <a class="text-white text-xl-left " href="{{ i.id }}"> {{ i.name }}  </a>  <br>{{ i.updated }}</li>
+
+
+{% elif i.id > post.id|add:-25 and i.id < post.id|add:25 %}
+
+      <li class="list-group-item list-group-item-action"> <a class="text-dark text-xl-left" href="{{i.id}}">{{ i.name }}</a> <br>{{ i.updated }}</li>
+
+       {% endif %}
+
+
+
+</ul>
+    {% endfor %}
+
+</div>
+    </div>
+</div>
+</div>
+
+
+</div>
+    </div>
+{% endblock content %}
+
+
+
+
+

@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<div class="container  mt-3">
+
+  <div class="row  ">
+
+<div class="col-lg-8  ">
+{% if not object_list %}
+<p> По вашему запросу нет публикаций</p>
+{% else %}
+{% for i in object_list %}
+
+    <div class="card w-76 mb-3 ">
+
+
+        <div class="card-body">
+ <div class="card-title">
+      <p><h3> <strong> <a class="text-dark text-lg-left" href="{{ i.id }}">{{ i.name }}</a></strong></h3>
+    </div>
+        <h7 class="card-subtitle mb-2 text-muted">{{ i.updated }}</h7>
+{% autoescape off %}
+
+    <p class="text-dark text-lg-left">  {{ i.text }}<a class="text-dark " href="news/{{ i.id }}#anchor">Перейти к комментариям</a></p>
+
+     {% endautoescape %}
+
+<div class="ya-share2" data-curtain data-shape="round"  data-title="{{ post.name }}" data-url="http://127.0.0.1:8000/news/{{ i.id }}" data-services="collections,vkontakte,facebook,odnoklassniki,messenger,telegram" ></div>
+
+
+
+
+
+
+
+    <br>
+
+    </div>
+    </div>
+
+
+
+{% endfor %}
+{% endif %}
+</div>
+
+<div class="col-lg-4">
+
+<div class="card-inline ">
+<div class=" card bg-light mb-3 " style="height: 10rem;">
+<p class="text-center"> Подпишись на рассылку чтобы первым получать новости</p>
+<br>
+    <form method="post"  class="form-inline-auto">
+    {% csrf_token %}
+    <div class="row">
+<div class=" col-8 offset-1 ">
+{{ form.email }}
+
+</div>
+<div class="px-md-1">
+    <button type="submit" class="btn btn-success">&#10148;</button>
+</div>
+    </div>
+
+
+
+
+    </form>
+
+</div>
+
+
+</div>
+    </div>
+  </div>
+<br>
+
+</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        window.setTimeout(function(){
+            $('#my_alert').alert('close');
+        },5000);
+    });
+</script>
+
+
+
+</body>
+</html>
+{% endblock %}

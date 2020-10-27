@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+<div class="row">
+    <h3>Добро пожаловать {{ profile.user }}</h3>
+    {% if profile.picture %}
+
+    <img src="{{ profile.picture.url }}" width="128" height="128">
+    {% endif %}
+    {{ profile.gender }}
+
+
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,133 @@
+{% load i18n %}
+{% load account socialaccount %}
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <!-- Контейнер (определяет ширину компонента Navbar) -->
+    <div class="container">
+        <!-- Бренд и кнопка «Гамбургер» -->
+        <a class="navbar-brand" href="/"><img src="{% static 'republic.png' %} "  ><b>FOLCRAM</b></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbar-example" aria-controls="navbar-example"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Основная часть меню (может содержать ссылки, формы и другие элементы) -->
+        <div class="collapse navbar-collapse" id="navbar-example">
+            <!-- Этот блок расположен слева -->
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item ">
+                   {% url 'home' as url_home %}
+       <a class="nav-link " href="#">  <img src="{% static 'vk2.png' %}" width="16" height="16" alt="вк"> Вк<span class="sr-only">(current)</span></a>
+                </li>
+            <li class="nav-item ">
+                   {% url 'home' as url_home %}
+       <a class="nav-link " href="#">  <img src="{% static 'fass.png' %}" width="16" height="16" alt="вк"> Фейсбук<span class="sr-only">(current)</span></a>
+                </li>
+            <li class="nav-item ">
+                   {% url 'home' as url_home %}
+       <a class="nav-link " href="#">  <img src="{% static 'TWITTER.png' %}" width="16" height="16" alt="вк"> Твиттер<span class="sr-only">(current)</span></a>
+                </li>
+             <li class="nav-item ">
+                   {% url 'home' as url_home %}
+       <a class="nav-link " href="#">  <img src="{% static 'instagram.png' %}" width="16" height="16" alt="вк"> Инстаграм<span class="sr-only">(current)</span></a>
+                </li>
+                {% if user.is_active %}
+
+    <li class="nav-item">
+        {% url 'logout_page' as url_logout_page  %}
+        <a class="nav-link btn-outline-danger " href="{{ url_logout_page }}">Выйти</a>
+
+
+    </li>
+<li class="nav-item">
+    <b class="nav-link">  {{ request.user }}</b>
+</li>
+{% else %}
+
+                    <a class="nav-link btn-outline-success" data-toggle="modal" data-target="#exampleModalCenter" ><b>Войти</b></a>
+
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title center" id="exampleModalLongTitle">Авторизуйтесь</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+
+
+
+
+
+{% get_providers as socialaccount_providers %}
+
+{% if socialaccount_providers %}
+
+
+<div class="socialaccount_ballot">
+
+  <ul class="socialaccount_providers">
+
+    <a href="{%provider_login_url 'vk' %}" >  <img src="{% static  'vk.png' %}" width="64" height="64"></a>
+       <a href="{%provider_login_url 'google' %}">  <img src="{% static  'google.png' %}" width="64" height="64"></a>
+
+  </ul>
+
+
+
+</div>
+
+{% include "socialaccount/snippets/login_extra.html" %}
+
+{% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+    {% endif %}
+
+            </ul>
+            <!-- Этот блок расположен справа -->
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search_results' %}" method="get">
+                <input class="form-control mr-sm-2" name="q" type="search" placeholder="Поиск..."
+                       aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{% if messages %}
+
+    {% for message in messages %}
+    {% if message.tags %}
+
+        <div class="alert alert-success fade show" role="alert" id="my_alert" aria-live="assertive" aria-atomic="true">
+
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        <li class = "{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</div>
+{% endif %}
+  {% if form.errors.email %}
+            <div class="alert alert-danger fade show" role="alert" id="my_alert" aria-live="assertive" aria-atomic="true">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        {{ form.errors.email }}
+            </div>
+        {% endif %}
+{% if form2.errors.email %}
+            <div class="alert alert-danger fade show" role="alert" id="my_alert" aria-live="assertive" aria-atomic="true">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+        {{ form2.errors.email }}
+            </div>
+        {% endif %}
+</div>
